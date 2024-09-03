@@ -2,7 +2,7 @@
 
 ## **Overview**
 
-**PhenoPredict** is an innovative web-based platform that allows users to upload genetic data or an image of a person's face to receive predictions about their appearance, behavior, ancestry, and potential health risks. The application is built using a microservices architecture to ensure scalability, flexibility, and ease of maintenance.
+**[App Name]** is an innovative web-based platform that allows users to upload genetic data or an image of a person's face to receive predictions about their appearance, behavior, ancestry, and potential health risks. The application is built using a microservices architecture to ensure scalability, flexibility, and ease of maintenance.
 
 ## **Table of Contents**
 
@@ -31,7 +31,7 @@ The project is divided into several microservices, each handling a specific aspe
 
 ```
 project-root/
-├── ui-service/                      # Frontend React application
+├── user-interface-service/          # Frontend React application
 ├── auth-service/                    # User authentication and authorization service
 ├── genetic-data-processing-service/ # Genetic data parsing and processing
 ├── image-processing-service/        # Image analysis and facial recognition
@@ -123,7 +123,7 @@ cd yourprojectname
 Install dependencies for each service:
 
 ```bash
-cd ui-service
+cd user-interface-service
 npm install
 
 cd ../auth-service
