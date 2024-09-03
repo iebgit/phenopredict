@@ -1,4 +1,4 @@
-# **[App Name] - Genetic and Image-Based Prediction Platform**
+# **PhenoPredict - Genetic and Image-Based Prediction Platform**
 
 ## **Overview**
 

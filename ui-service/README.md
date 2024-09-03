@@ -1,151 +1,114 @@
-# **[App Name] - Genetic and Image-Based Prediction Platform**
+# **User Interface Service**
 
-## **Overview**
-
-**[App Name]** is an innovative web-based platform that allows users to upload genetic data or an image of a person's face to receive predictions about their appearance, behavior, ancestry, and potential health risks. The application is built using a microservices architecture to ensure scalability, flexibility, and ease of maintenance.
+Welcome to the User Interface (UI) Service of **PhenoPredict**. This service is built using React.js and serves as the primary interaction point for users. It allows users to upload genetic data or images, view predictions related to appearance, behavior, ancestry, and health, and manage their profiles.
 
 ## **Table of Contents**
 
-1. [Project Structure](#project-structure)
-2. [Microservices Overview](#microservices-overview)
-   - [User Interface Service](#user-interface-service)
-   - [Authentication and Authorization Service](#authentication-and-authorization-service)
-   - [Genetic Data Processing Service](#genetic-data-processing-service)
-   - [Image Processing Service](#image-processing-service)
-   - [Prediction and Analysis Service](#prediction-and-analysis-service)
-   - [Reporting and Visualization Service](#reporting-and-visualization-service)
-   - [Data Storage Service](#data-storage-service)
-   - [Notification Service](#notification-service)
-   - [API Gateway](#api-gateway)
-3. [Technology Stack](#technology-stack)
-4. [Getting Started](#getting-started)
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Installation](#installation)
-   - [Running the Services](#running-the-services)
-5. [Contributing](#contributing)
-6. [License](#license)
+   - [Running the Application](#running-the-application)
+4. [Project Structure](#project-structure)
+5. [Environment Variables](#environment-variables)
+6. [Contributing](#contributing)
+7. [License](#license)
 
-## **Project Structure**
+## **Overview**
 
-The project is divided into several microservices, each handling a specific aspect of the application. These services communicate through an API Gateway and use a variety of technologies to perform their tasks.
+The User Interface Service is a React.js application that provides a user-friendly interface for interacting with **[App Name]**. Users can:
 
-```
-project-root/
-├── user-interface-service/          # Frontend React application
-├── auth-service/                    # User authentication and authorization service
-├── genetic-data-processing-service/ # Genetic data parsing and processing
-├── image-processing-service/        # Image analysis and facial recognition
-├── prediction-service/              # Predictive modeling for appearance, behavior, and health
-├── reporting-service/               # Report generation and data visualization
-├── data-storage-service/            # Database and storage management
-├── notification-service/            # Email and notification handling
-└── api-gateway/                     # API Gateway for routing and communication
-```
+- Upload genetic data files (e.g., VCF, CSV) and images (e.g., JPEG, PNG).
+- Receive and view detailed predictions regarding their appearance, behavior, ancestry, and potential health risks.
+- Manage their accounts, including login, registration, and data management.
 
-## **Microservices Overview**
+This service communicates with backend microservices via an API Gateway to fetch and display data.
 
-### **User Interface Service**
+## **Features**
 
-- **Purpose**: Provides the user interface for uploading genetic data and images, viewing predictions, and managing accounts.
-- **Technology**: React.js, Redux, Axios, Material-UI.
-
-### **Authentication and Authorization Service**
-
-- **Purpose**: Manages user authentication, registration, and authorization using JWT tokens.
-- **Technology**: Python, Django/Flask, OAuth2, JWT.
-
-### **Genetic Data Processing Service**
-
-- **Purpose**: Processes and analyzes uploaded genetic data, extracting relevant SNPs for predictions.
-- **Technology**: Python, Biopython.
-
-### **Image Processing Service**
-
-- **Purpose**: Analyzes uploaded images to extract facial features and perform ancestry, behavior, and health predictions.
-- **Technology**: Python, OpenCV, TensorFlow/PyTorch.
-
-### **Prediction and Analysis Service**
-
-- **Purpose**: Runs machine learning models to predict appearance, behavior, ancestry, and health risks based on genetic or image data.
-- **Technology**: Python, Scikit-learn, TensorFlow/PyTorch.
-
-### **Reporting and Visualization Service**
-
-- **Purpose**: Generates detailed reports and visualizations based on the analysis results.
-- **Technology**: Node.js/Python, D3.js, Plotly.
-
-### **Data Storage Service**
-
-- **Purpose**: Manages the storage of user data, including genetic data, images, and analysis results.
-- **Technology**: PostgreSQL, AWS S3, MongoDB/DynamoDB.
-
-### **Notification Service**
-
-- **Purpose**: Handles email and in-app notifications to inform users about the status of their data processing and results.
-- **Technology**: Node.js/Python, AWS SES, SendGrid.
-
-### **API Gateway**
-
-- **Purpose**: Routes requests from the frontend to the appropriate backend services and handles authentication and authorization.
-- **Technology**: AWS API Gateway, Kong, Express.js.
-
-## **Technology Stack**
-
-- **Frontend**: React.js, Redux, Material-UI
-- **Backend**: Python (Django/Flask), Node.js
-- **Machine Learning**: Scikit-learn, TensorFlow, PyTorch
-- **Database**: PostgreSQL, MongoDB, AWS S3
-- **API Gateway**: AWS API Gateway, Kong
-- **Authentication**: OAuth2, JWT
-- **Containerization**: Docker, Kubernetes
-- **CI/CD**: Jenkins, GitHub Actions, AWS CodePipeline
-- **Hosting**: AWS (EC2, S3, Lambda)
+- **User Authentication**: Secure login and registration with JWT-based authentication.
+- **Data Upload**: Support for genetic data and image uploads.
+- **Results Visualization**: Interactive visualizations of predictions, including charts, graphs, and generated images.
+- **User Dashboard**: Overview of user activities, recent uploads, and analysis results.
+- **Responsive Design**: Mobile-friendly interface using Material-UI for consistent design.
 
 ## **Getting Started**
 
 ### **Prerequisites**
 
+Before you begin, ensure you have met the following requirements:
+
 - **Node.js**: v12.x or later
-- **Python**: v3.7 or later
-- **Docker**: v19.x or later
-- **Git**: v2.x or later
-- **AWS Account** (optional for cloud deployment)
+- **npm**: v6.x or later
+- **Git**: Installed for version control
 
 ### **Installation**
 
-Clone the repository and navigate to the desired service directory:
+1. **Clone the Repository**:
 
-```bash
-git clone https://github.com/yourusername/yourprojectname.git
-cd yourprojectname
+   ```bash
+   git clone https://github.com/iebgit/ui-service.git
+   cd ui-service
+   ```
+
+2. **Install Dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+### **Running the Application**
+
+1. **Start the Development Server**:
+
+   ```bash
+   npm start
+   ```
+
+   The app should now be running on `http://localhost:3000`.
+
+2. **Build for Production**:
+
+   To create an optimized production build:
+
+   ```bash
+   npm run build
+   ```
+
+   The production-ready files will be in the `build/` directory.
+
+## **Project Structure**
+
+```
+ui-service/
+├── public/                     # Public assets (favicon, index.html)
+├── src/
+│   ├── assets/                 # Static assets (images, fonts)
+│   ├── components/             # Reusable UI components
+│   ├── pages/                  # Page components (Home, Login, Dashboard)
+│   ├── redux/                  # Redux slices and store configuration
+│   ├── services/               # API service functions
+│   ├── styles/                 # Global styles and themes
+│   ├── App.js                  # Main app component
+│   ├── index.js                # Entry point
+│   └── routes/                 # Route configuration
+├── .env                        # Environment variables
+├── .gitignore                  # Git ignore rules
+├── package.json                # Node.js dependencies and scripts
+└── README.md                   # Project documentation
 ```
 
-Install dependencies for each service:
+## **Environment Variables**
 
-```bash
-cd user-interface-service
-npm install
+The application requires specific environment variables to be configured. Create a `.env` file in the root directory with the following variables:
 
-cd ../auth-service
-pip install -r requirements.txt
-
-# Repeat for other services
+```
+REACT_APP_API_BASE_URL=<API Gateway Base URL>
+REACT_APP_AUTH_SERVICE_URL=<Authentication Service URL>
 ```
 
-### **Running the Services**
-
-1. **Start Docker**: Ensure Docker is running on your machine.
-2. **Start Services**:
-
-   - For each service, use Docker Compose to build and run the containers:
-
-     ```bash
-     docker-compose up --build
-     ```
-
-3. **Access the Application**:
-   - Navigate to `http://localhost:3000` to access the User Interface Service.
-   - The API Gateway will route requests to the appropriate backend services.
+Replace `<API Gateway Base URL>` and `<Authentication Service URL>` with the actual URLs for your backend services.
 
 ## **Contributing**
 
