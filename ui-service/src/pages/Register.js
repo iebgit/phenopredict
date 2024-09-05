@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearError } from "../redux/authSlice";
+import "./LoginRegister.css"; // Reusing the same CSS file
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -8,17 +9,17 @@ const Register = () => {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.auth);
 
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerUser({ email, password }));
   };
 
-  useEffect(() => {
-    dispatch(clearError());
-  }, []);
-
   return (
-    <div>
+    <div className="form-container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -26,28 +27,25 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="glow-input"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="glow-input"
         />
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="glow-button" disabled={isLoading}>
           Register
         </button>
       </form>
 
-      {/* Check for string errors and render */}
       {error && typeof error === "string" && (
         <p style={{ color: "red" }}>{error}</p>
       )}
-
-      {error && typeof error === "object" && (
-        <div style={{ color: "red" }}>
-          {error.email && <p>{error.email[0]}</p>}
-          {error.password && <p>{error.password[0]}</p>}
-        </div>
+      {error && typeof error === "object" && error.email && (
+        <p style={{ color: "red" }}>{error.email[0]}</p>
       )}
     </div>
   );
