@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearError } from "../redux/authSlice";
-import "./LoginRegister.css"; // External CSS file for styling
+import { Link } from "react-router-dom"; // Import Link for navigation
+import "./LoginRegister.css"; // Reusing the same CSS file
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ const Login = () => {
   const { isLoading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(clearError()); // Clear error when component mounts
+    dispatch(clearError());
   }, [dispatch]);
 
   const handleSubmit = (e) => {
@@ -47,6 +48,14 @@ const Login = () => {
       {error && typeof error === "object" && error.email && (
         <p style={{ color: "red" }}>{error.email[0]}</p>
       )}
+
+      {/* Add a button to navigate to the Register page */}
+      <div className="switch-auth-link">
+        <p>Don't have an account?</p>
+        <Link to="/register" className="secondary-button">
+          Register
+        </Link>
+      </div>
     </div>
   );
 };

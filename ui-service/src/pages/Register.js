@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearError } from "../redux/authSlice";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import "./LoginRegister.css"; // Reusing the same CSS file
 
 const Register = () => {
@@ -47,6 +48,14 @@ const Register = () => {
       {error && typeof error === "object" && error.email && (
         <p style={{ color: "red" }}>{error.email[0]}</p>
       )}
+
+      {/* Add a button to navigate to the Login page */}
+      <div className="switch-auth-link">
+        <p>Already have an account?</p>
+        <Link to="/login" className="secondary-button">
+          Login
+        </Link>
+      </div>
     </div>
   );
 };

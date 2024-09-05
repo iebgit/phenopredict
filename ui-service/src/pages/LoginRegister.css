@@ -1,55 +1,82 @@
 /* LoginRegister.css */
-body {
-  background-color: #0a0a0a;
-  color: #00ff00;
-  font-family: "Roboto Mono", monospace;
-}
 
+/* Same container as the User Dashboard */
 .form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  background-color: #121212;
+  margin: 50px auto;
+  max-width: 600px; /* Same width as the Dashboard */
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00ff00;
 }
 
 h2 {
+  color: #00ff00;
+  font-size: 2.5rem; /* Same size as the dashboard heading */
+  margin-bottom: 40px;
   text-shadow: 0 0 10px #00ff00;
 }
 
-form {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-}
-
 .glow-input {
-  background-color: #121212;
-  border: 1px solid #333;
-  color: #00ff00;
+  width: 100%;
+  max-width: 400px; /* Ensure inputs and buttons have the same max-width */
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  background-color: #1c1c1c;
+  border: 1px solid #00ff00;
   border-radius: 5px;
-  transition: border 0.3s, box-shadow 0.3s;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 0 10px #00ff00;
+  transition: box-shadow 0.3s ease;
 }
 
 .glow-input:focus {
-  border: 1px solid #00ff00;
-  box-shadow: 0 0 5px #00ff00;
+  box-shadow: 0 0 15px #00ff00;
   outline: none;
 }
 
 .glow-button {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
   background-color: #00ff00;
   color: #121212;
-  padding: 10px;
   border: none;
   border-radius: 5px;
-  font-family: "Roboto Mono", monospace;
+  font-size: 1.2rem;
+  cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .glow-button:hover {
   background-color: #00cc00;
   box-shadow: 0 0 10px #00ff00;
+}
+
+.glow-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondary-button {
+  font-weight: bold;
+  color: #00ff00;
+  font-family: "Roboto Mono", monospace;
+  transition: color 0.3s ease-in-out;
+}
+
+.secondary-button:hover {
+  color: #00cc00;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+.switch-auth-link {
+  color: #b0b0b0; /* Initial color */
 }

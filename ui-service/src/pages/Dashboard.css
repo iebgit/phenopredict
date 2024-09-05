@@ -1,4 +1,6 @@
 /* Dashboard.css */
+
+/* Body styling */
 body {
   background-color: #0a0a0a;
   color: #00ff00;
@@ -6,33 +8,38 @@ body {
   margin: 0;
 }
 
+/* Dashboard container */
+/* Container and headings */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
+  text-align: center;
   background-color: #121212;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #00ff00;
   margin: 50px auto;
-  max-width: 800px;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00ff00;
 }
 
 .dashboard-heading {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #00ff00;
   text-shadow: 0 0 10px #00ff00;
+  margin-bottom: 20px;
 }
 
 .dashboard-description {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
   color: #b0b0b0;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
+/* Upload section and headings */
 .upload-section {
-  margin-top: 20px;
   width: 100%;
+  margin-top: 20px;
 }
 
 .upload-heading {
@@ -42,27 +49,48 @@ body {
   margin-bottom: 10px;
 }
 
-button,
-input {
-  font-family: "Roboto Mono", monospace;
-  background-color: #121212;
+/* Button wrapper for aligning buttons */
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Full width of the container */
+}
+
+.glow-button,
+.toggle-button {
+  width: 100%; /* Ensure both buttons have full width */
+  max-width: 400px; /* Set a maximum width for consistency */
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Styling for the primary action button */
+.glow-button {
+  background-color: #00ff00;
+  color: #121212;
+  border: none;
+}
+
+.glow-button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* Inverse style for the toggle button */
+.toggle-button {
+  background-color: transparent;
   color: #00ff00;
   border: 1px solid #00ff00;
-  padding: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border-radius: 5px;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
-button:hover,
-input:hover {
+.toggle-button:hover {
+  background-color: #00ff00;
+  color: #121212;
   box-shadow: 0 0 10px #00ff00;
-  border-color: #00cc00;
-}
-
-input:focus,
-button:focus {
-  outline: none;
-  box-shadow: 0 0 15px #00ff00;
 }

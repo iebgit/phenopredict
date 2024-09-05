@@ -1,4 +1,6 @@
 /* DataUpload.css */
+
+/* Container for the upload elements */
 .upload-container {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,14 @@
   width: 100%;
 }
 
+/* Completely hide the native file input */
+.file-input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+/* Label acting as a custom file input button */
 .file-input-label {
   display: flex;
   align-items: center;
@@ -16,15 +26,13 @@
   padding: 10px;
   border-radius: 5px;
   width: 100%;
+  max-width: 300px;
   margin-bottom: 20px;
   transition: border 0.3s, box-shadow 0.3s;
   cursor: pointer;
 }
 
-.file-input {
-  display: none; /* Hide the default file input */
-}
-
+/* Custom styled "Choose File" button */
 .custom-file-button {
   background-color: #00ff00;
   color: #121212;
@@ -33,17 +41,20 @@
   margin-right: 10px;
 }
 
+/* Display the file name next to the custom button */
 .file-name {
   color: #00ff00;
   font-family: "Roboto Mono", monospace;
   margin-left: 10px;
 }
 
+/* Hover effect for the label */
 .file-input-label:hover {
   box-shadow: 0 0 10px #00ff00;
   border-color: #00cc00;
 }
 
+/* Glow effect for the upload button */
 .glow-button {
   background-color: #00ff00;
   color: #121212;
@@ -51,6 +62,7 @@
   border: none;
   border-radius: 5px;
   width: 100%;
+  max-width: 300px;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 

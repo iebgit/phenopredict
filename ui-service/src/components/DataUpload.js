@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DataUpload.css"; // Import the new CSS file for custom styling
+import "./DataUpload.css"; // Ensure the CSS for styling is linked
 
 const DataUpload = ({ uploadType }) => {
   const [fileName, setFileName] = useState("No file chosen");
@@ -20,9 +20,6 @@ const DataUpload = ({ uploadType }) => {
         <span className="custom-file-button">Choose File</span>
         <span className="file-name">{fileName}</span>
       </label>
-      <button className="glow-button">
-        Upload {uploadType === "genetic" ? "Genetic Data" : "Image"}
-      </button>
     </div>
   );
 };
