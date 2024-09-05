@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearError } from "../redux/authSlice";
+import { registerUser, clearError } from "../redux/authSlice";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    dispatch(registerUser({ email, password }));
   };
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Login = () => {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -33,13 +33,24 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" disabled={auth.isLoading}>
-          Login
+        <button type="submit" disabled={isLoading}>
+          Register
         </button>
       </form>
-      {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
+
+      {/* Check for string errors and render */}
+      {error && typeof error === "string" && (
+        <p style={{ color: "red" }}>{error}</p>
+      )}
+
+      {error && typeof error === "object" && (
+        <div style={{ color: "red" }}>
+          {error.email && <p>{error.email[0]}</p>}
+          {error.password && <p>{error.password[0]}</p>}
+        </div>
+      )}
     </div>
   );
 };
 
-export default Login;
+export default Register;

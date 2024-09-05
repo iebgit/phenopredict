@@ -7,12 +7,24 @@ from django.contrib.auth.models import User
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'email': {'required': True},
+        }
+
+    def validate_email(self, value):
+        """
+        Check if the email already exists in the database.
+        """
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with that email already exists.")
+        return value
 
     def create(self, validated_data):
+        # Create a new user using email as the unique identifier (username)
         user = User.objects.create_user(
-            username=validated_data['username'],
+            username=validated_data['email'],  # Set email as the username
             email=validated_data['email'],
             password=validated_data['password']
         )
