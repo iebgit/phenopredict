@@ -10,21 +10,21 @@
   text-align: center;
   background-color: #121212;
   margin: 50px auto;
-  max-width: 600px; /* Same width as the Dashboard */
+  max-width: 400px; /* Same width as the Dashboard */
   border-radius: 15px;
   box-shadow: 0 0 20px #00ff00;
 }
 
 h2 {
   color: #00ff00;
-  font-size: 2.5rem; /* Same size as the dashboard heading */
+  font-size: 2rem; /* Same size as the dashboard heading */
   margin-bottom: 40px;
   text-shadow: 0 0 10px #00ff00;
 }
 
 .glow-input {
   width: 100%;
-  max-width: 400px; /* Ensure inputs and buttons have the same max-width */
+  max-width: 380px; /* Ensure inputs and buttons have the same max-width */
   padding: 10px;
   margin-bottom: 20px;
   background-color: #1c1c1c;
@@ -43,7 +43,7 @@ h2 {
 
 .glow-button {
   width: 100%;
-  max-width: 400px;
+  max-width: 320px;
   padding: 10px;
   background-color: #00ff00;
   color: #121212;

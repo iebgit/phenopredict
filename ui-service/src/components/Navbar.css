@@ -1,7 +1,7 @@
 /* Navbar.css */
 .navbar {
   background-color: #121212;
-  padding: 15px;
+
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #333;
@@ -13,7 +13,7 @@
 }
 
 .navbar-list li {
-  margin: 0 20px;
+  margin: 0 1rem;
 }
 
 .navbar-list a {

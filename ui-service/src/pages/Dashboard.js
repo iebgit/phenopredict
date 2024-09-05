@@ -12,24 +12,30 @@ const Dashboard = () => {
   // Dynamic description based on upload type
   const description =
     uploadType === "genetic"
-      ? "Upload genetic data (e.g., raw data from 23andMe, AncestryDNA) to receive predictions on appearance, behavior, ancestry, and health risks."
-      : "Upload an image of a person to receive predictions based on physical features, including ancestry, health risks, and behavioral tendencies.";
+      ? "Upload genetic data (raw data from 23andMe/AncestryDNA) to gain insight into appearance, behavior, ancestry, and health risks."
+      : "Upload a facial image to receive predictions based on physical features, including ancestry, health, and behavior.";
 
   return (
     <div className="dashboard-container">
-      <h2 className="dashboard-heading">Dashboard</h2>
+      {uploadType === "genetic" ? (
+        <div>
+          <h2 className="dashboard-heading">Upload Genetic Data</h2>
+        </div>
+      ) : (
+        <div>
+          <h2 className="dashboard-heading">Upload Image</h2>
+        </div>
+      )}
       <p className="dashboard-description">{description}</p>
 
       {/* Conditionally render the DataUpload component based on the selected upload type */}
       <div className="upload-section">
         {uploadType === "genetic" ? (
           <div>
-            <h3 className="upload-heading">Upload Genetic Data</h3>
             <DataUpload uploadType="genetic" />
           </div>
         ) : (
           <div>
-            <h3 className="upload-heading">Upload Image</h3>
             <DataUpload uploadType="image" />
           </div>
         )}
