@@ -116,8 +116,8 @@ project-root/
 Clone the repository and navigate to the desired service directory:
 
 ```bash
-git clone https://github.com/yourusername/yourprojectname.git
-cd yourprojectname
+git clone https://github.com/iebgit/phenopredict.git
+cd phenopredict
 ```
 
 Install dependencies for each service:
