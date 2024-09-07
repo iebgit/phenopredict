@@ -1,10 +1,16 @@
-body {
+/* Set a consistent global background color */
+html,
+body,
+#root {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  background-color: #121212; /* Matrix dark background */
+  color: #b0b0b0; /* Matrix green text */
+}
+
+* {
+  box-sizing: border-box;
 }
 
 code {
