@@ -33,7 +33,7 @@ const App = () => {
     }, 500); // Adjust delay as needed to simulate loading
 
     return () => clearTimeout(timeout); // Clean up timeout on route change
-  }, [location, setIsLoading]);
+  }, [setIsLoading, dispatch]);
 
   return (
     <>
