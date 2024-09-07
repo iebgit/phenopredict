@@ -6,9 +6,32 @@
   position: relative;
 }
 
-body {
+/* Set a consistent global background color */
+html,
+body,
+#root {
+  height: 100%;
   margin: 0;
-  overflow: hidden;
-  color: #00ff00;
-  font-family: "Roboto Mono", monospace;
+  padding: 0;
+  background-color: #121212; /* Matrix dark background */
+  color: #b0b0b0; /* Matrix green text */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Global fade-in for smoother transitions */
+.fade {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

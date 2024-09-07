@@ -1,23 +1,12 @@
-// src/components/LoadingSpinner.js
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import "./LoadingSpinner.css"; // Create this CSS file for Matrix styling
+import { useLoading } from "../contexts/LoadingContext"; // Assuming you have a loading context
+import "./LoadingSpinner.css"; // Matrix-style CSS
 
 const LoadingSpinner = () => {
-  const [loading, setLoading] = useState(false);
-  const location = useLocation(); // Detect route changes
+  const { isLoading } = useLoading(); // Get loading status from context or global state
 
-  useEffect(() => {
-    setLoading(true); // Start loading when route changes
-    const timeout = setTimeout(() => {
-      setLoading(false); // Stop loading after a brief delay
-    }, 700);
-
-    return () => clearTimeout(timeout); // Clear timeout if the component unmounts
-  }, [location]); // Runs on location change
-
-  if (!loading) return null; // Don't render the spinner if not loading
+  if (!isLoading) return null; // Don't render spinner if not loading
 
   return (
     <div className="matrix-loading-overlay">

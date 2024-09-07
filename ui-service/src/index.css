@@ -9,10 +9,6 @@ body,
   color: #b0b0b0; /* Matrix green text */
 }
 
-* {
-  box-sizing: border-box;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes
 from .serializers import RegisterSerializer, LoginSerializer
+from django.utils.encoding import force_str  # Correct import
 
 
 # Helper function to send verification email
