@@ -17,7 +17,7 @@
 
 /* Heading */
 .home-heading {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #00ff00;
   text-shadow: 0 0 10px #00ff00;
   margin-bottom: 20px;
@@ -43,41 +43,25 @@
   list-style: none;
   padding: 0;
   font-size: 1.2rem;
+  height: 1.2rem;
   color: #b0b0b0; /* Initial color */
-}
-
-.features-list li {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
   position: relative;
-  transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
-  cursor: pointer;
 }
 
-/* Glowing and color change animation on hover */
-.features-list li:hover {
-  color: #00ff00; /* Glowing green on hover */
-  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-}
-
-/* Optional: glowing animation that pulses the text */
-@keyframes glowing {
-  0% {
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-  }
-  50% {
-    text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
-  }
-  100% {
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-  }
-}
-
-.features-list li:hover {
-  animation: glowing 1.5s infinite;
+/* Typing effect for the features list */
+.typed-word {
+  font-family: "Courier New", Courier, monospace; /* Monospace font for Matrix effect */
+  color: #b0b0b0; /* Matrix green */
+  white-space: nowrap;
+  overflow: hidden; /* Ensures text doesn't overflow */
+  display: inline-block;
+  width: auto;
+  border-right: 2px solid #b0b0b0; /* Blinking caret */
 }
 
 /* Call to action buttons */
-
 .glow-button {
   background-color: #00ff00;
   color: #121212;
@@ -95,6 +79,7 @@
   box-shadow: 0 0 10px #00ff00;
 }
 
+/* Image transition and scaling */
 .home-image-container {
   width: 300px; /* Adjust width */
   height: 300px; /* Adjust height */
@@ -107,7 +92,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Smooth transition */
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .fade-in {
@@ -118,15 +103,4 @@
 .fade-out {
   opacity: 0;
   transform: scale(1.05); /* Slight scale effect during transition */
-}
-
-@keyframes matrix-fade {
-  0% {
-    opacity: 0;
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }

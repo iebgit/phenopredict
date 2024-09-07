@@ -8,6 +8,7 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     token: null,
+    refreshToken: null,
     error: null,
     isLoading: false,
   },
@@ -25,33 +26,39 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-
     loginStart: (state) => {
       state.isLoading = true;
       state.error = null;
       state.user = null;
       state.token = null;
+      state.refreshToken = null;
     },
     loginSuccess: (state, action) => {
       state.isLoading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
+      state.refreshToken = action.payload.refreshToken;
       state.error = null;
     },
     loginFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
     logout: (state) => {
       state.user = null;
       state.token = null;
+      state.refreshToken = null;
       state.error = null;
     },
-
-    // Action to clear errors
     clearError: (state) => {
       state.error = null;
+    },
+    // New action for loading user from storage
+    loadUserFromStorage: (state, action) => {
+      const { token, refreshToken, user } = action.payload;
+      state.token = token;
+      state.refreshToken = refreshToken;
+      state.user = user;
     },
   },
 });
@@ -64,21 +71,32 @@ export const {
   loginSuccess,
   loginFailure,
   logout,
-  clearError, // Export the clearError action
+  clearError,
+  loadUserFromStorage, // Export the new action
 } = authSlice.actions;
+
+// Load user from localStorage when app starts
+export const loadUserFromStorageAsync = () => (dispatch) => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh");
+  const user = localStorage.getItem("user");
+
+  if (token && refreshToken && user) {
+    dispatch(loadUserFromStorage({ token, refreshToken, user }));
+  }
+};
 
 // Async action for user registration
 export const registerUser = (credentials) => async (dispatch) => {
   try {
-    console.log(credentials);
     dispatch(registerStart());
     const response = await axios.post(`${API_URL}/auth/register/`, {
       email: credentials.email,
       password: credentials.password,
     });
     dispatch(registerSuccess({ user: response.data.user }));
+    return true; // Return success for the frontend
   } catch (error) {
-    console.log(error);
     dispatch(
       registerFailure(
         error.response?.data?.email
@@ -87,15 +105,14 @@ export const registerUser = (credentials) => async (dispatch) => {
           ? error.response?.data?.password[0]
           : "Registration failed"
       )
-    ); // Pass the full error object
+    );
+    return false; // Return failure
   }
 };
 
 // Async action for user login
 export const login = (credentials) => async (dispatch) => {
   try {
-    console.log(credentials);
-
     dispatch(loginStart());
     const response = await axios.post(`${API_URL}/auth/login/`, {
       email: credentials.email,
@@ -103,10 +120,17 @@ export const login = (credentials) => async (dispatch) => {
     });
 
     const { access, refresh } = response.data;
-    dispatch(loginSuccess({ token: access, user: credentials.email }));
-    localStorage.setItem("token", access); // Store token in localStorage
+    dispatch(
+      loginSuccess({
+        token: access,
+        refreshToken: refresh,
+        user: credentials.email,
+      })
+    );
+    localStorage.setItem("token", access); // Store access token in localStorage
+    localStorage.setItem("refresh", refresh); // Store refresh token in localStorage
+    localStorage.setItem("user", credentials.email); // Store user email in localStorage
   } catch (error) {
-    console.log(error.response?.data);
     dispatch(
       loginFailure(
         error.response?.data?.non_field_errors
@@ -119,7 +143,9 @@ export const login = (credentials) => async (dispatch) => {
 
 // Async action for user logout
 export const performLogout = () => (dispatch) => {
-  localStorage.removeItem("token"); // Remove token from localStorage
+  localStorage.removeItem("token"); // Remove tokens from localStorage
+  localStorage.removeItem("refresh");
+  localStorage.removeItem("user");
   dispatch(logout());
 };
 

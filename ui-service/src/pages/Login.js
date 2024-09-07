@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearError } from "../redux/authSlice";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import "./LoginRegister.css"; // Reusing the same CSS file
+import { Link } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import "./LoginRegister.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,13 +12,28 @@ const Login = () => {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.auth);
 
+  const [openSnackbar, setOpenSnackbar] = useState(false); // Control the Snackbar
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error"); // Controls severity: success/error
+
   useEffect(() => {
     dispatch(clearError());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (error) {
+      setSnackbarMessage(error);
+      setOpenSnackbar(true); // Show error message in Snackbar
+    }
+  }, [error]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
+  };
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false); // Close the Snackbar
   };
 
   return (
@@ -42,14 +59,18 @@ const Login = () => {
         </button>
       </form>
 
-      {error && typeof error === "string" && (
-        <p style={{ color: "red" }}>{error}</p>
-      )}
-      {error && typeof error === "object" && error.email && (
-        <p style={{ color: "red" }}>{error.email[0]}</p>
-      )}
+      {/* Snackbar for success or error notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
-      {/* Add a button to navigate to the Register page */}
       <div className="switch-auth-link">
         <p>Don't have an account?</p>
         <Link to="/register" className="secondary-button">
