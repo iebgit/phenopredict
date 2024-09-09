@@ -60,6 +60,30 @@ const authSlice = createSlice({
       state.refreshToken = refreshToken;
       state.user = user;
     },
+    resendVerificationStart: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    resendVerificationSuccess: (state) => {
+      state.isLoading = false;
+      state.error = null;
+    },
+    resendVerificationFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    resetPasswordStart: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    resetPasswordSuccess: (state) => {
+      state.isLoading = false;
+      state.error = null;
+    },
+    resetPasswordFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -72,7 +96,13 @@ export const {
   loginFailure,
   logout,
   clearError,
-  loadUserFromStorage, // Export the new action
+  loadUserFromStorage,
+  resendVerificationStart,
+  resendVerificationSuccess,
+  resendVerificationFailure,
+  resetPasswordStart,
+  resetPasswordSuccess,
+  resetPasswordFailure,
 } = authSlice.actions;
 
 // Load user from localStorage when app starts
@@ -147,6 +177,36 @@ export const performLogout = () => (dispatch) => {
   localStorage.removeItem("refresh");
   localStorage.removeItem("user");
   dispatch(logout());
+};
+
+// Async action for resending verification email
+export const resendVerificationEmail = (email) => async (dispatch) => {
+  try {
+    await axios.post(`${API_URL}/auth/resend-verification/`, { email });
+  } catch (error) {
+    dispatch(
+      loginFailure(
+        error.response?.data?.non_field_errors
+          ? error.response?.data?.non_field_errors[0]
+          : "Unable to resend verification email"
+      )
+    );
+  }
+};
+
+// Async action for resetting password
+export const resetPassword = (email) => async (dispatch) => {
+  try {
+    await axios.post(`${API_URL}/auth/reset-password/`, { email });
+  } catch (error) {
+    dispatch(
+      loginFailure(
+        error.response?.data?.non_field_errors
+          ? error.response?.data?.non_field_errors[0]
+          : "Unable to reset password"
+      )
+    );
+  }
 };
 
 export default authSlice.reducer;

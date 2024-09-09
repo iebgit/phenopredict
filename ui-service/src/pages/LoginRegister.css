@@ -80,3 +80,32 @@ h2 {
 .switch-auth-link {
   color: #b0b0b0; /* Initial color */
 }
+
+/* Ensure the buttons have the same combined width as the Login button */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensure it takes up full width */
+  max-width: 400px; /* Matches the width of the Login button */
+  margin-top: 10px;
+}
+
+.resend-button,
+.reset-password-button {
+  width: 48%; /* Each button will take up nearly half of the container */
+  margin: 5px;
+  padding: 10px;
+  background-color: #00ff00;
+  color: #121212;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+
+.resend-button:hover,
+.reset-password-button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 10px #00ff00;
+}

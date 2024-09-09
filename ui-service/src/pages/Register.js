@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser, clearError } from "../redux/authSlice";
+import {
+  registerUser,
+  clearError,
+  resendVerificationEmail,
+} from "../redux/authSlice";
 import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -34,8 +38,29 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      setSnackbarSeverity("error");
+      setSnackbarMessage(error);
+      setOpenSnackbar(true); // Show error message in Snackbar
+    }
+  }, [error]);
+
   const handleSnackbarClose = () => {
     setOpenSnackbar(false); // Close the Snackbar
+  };
+
+  const handleResendVerification = () => {
+    if (email) {
+      dispatch(resendVerificationEmail(email));
+      setSnackbarMessage("Verification email resent. Check your inbox.");
+      setSnackbarSeverity("info");
+      setOpenSnackbar(true); // Show resend email notification
+    } else {
+      setSnackbarMessage("Please provide an email address.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true); // Show error if email is not provided
+    }
   };
 
   return (
@@ -62,6 +87,14 @@ const Register = () => {
         </button>
       </form>
 
+      <button
+        onClick={handleResendVerification}
+        className="glow-button"
+        disabled={isLoading}
+      >
+        Resend Verification Email
+      </button>
+
       {/* Snackbar for success or error notifications */}
       <Snackbar
         open={openSnackbar}
@@ -73,13 +106,6 @@ const Register = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-
-      {error && typeof error === "string" && (
-        <p style={{ color: "red" }}>{error}</p>
-      )}
-      {error && typeof error === "object" && error.email && (
-        <p style={{ color: "red" }}>{error.email[0]}</p>
-      )}
 
       <div className="switch-auth-link">
         <p>Already have an account?</p>

@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'auth_service_db',
         'USER': 'auth_user',
-        'PASSWORD': 'phenopredict123',
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432',
     }

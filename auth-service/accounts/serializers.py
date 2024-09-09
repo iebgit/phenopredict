@@ -55,17 +55,24 @@ class LoginSerializer(serializers.Serializer):
         password = data.get('password')
 
         if email and password:
+            # Try to fetch the user by email, not username
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
                 raise serializers.ValidationError('Invalid email or password')
 
-            if not user.is_active:
-                raise serializers.ValidationError('Please verify your email before logging in.')
-
+            # Authenticate the user
             user = authenticate(username=user.username, password=password)
             if user:
                 return user
             raise serializers.ValidationError('Invalid email or password')
-
         raise serializers.ValidationError('Must include "email" and "password"')
+    
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    new_password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+
+    def save(self, user):
+        user.set_password(self.validated_data['new_password'])
+        user.save()

@@ -8,8 +8,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import RegisterSerializer, LoginSerializer, PasswordResetConfirmSerializer 
 from django.utils.encoding import force_str  # Correct import
+from django.core.cache import cache  # Use Django's cache system for failed attempts
+
 
 
 # Helper function to send verification email
@@ -106,3 +108,50 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+    
+
+class PasswordResetView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get("email")
+        user = get_object_or_404(User, email=email)
+
+        # Generate token
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+        # Construct password reset URL
+        reset_url = f"{request.scheme}://{request.get_host()}/reset-password/{uid}/{token}/"
+
+        # Send password reset email
+        send_mail(
+            'Reset Your Password',
+            f'Click the link to reset your password: {reset_url}',
+            'noreply@phenopredict.com',
+            [user.email],
+            fail_silently=False,
+        )
+
+        return Response({"message": "Password reset email sent."}, status=status.HTTP_200_OK)
+    
+    
+class PasswordResetConfirmView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = PasswordResetConfirmSerializer  # Add the serializer class
+
+    def post(self, request, uidb64, token, *args, **kwargs):
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            serializer = self.get_serializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(user=user)
+                return Response({"message": "Password reset successful!"}, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"message": "Invalid token or user."}, status=status.HTTP_400_BAD_REQUEST)
