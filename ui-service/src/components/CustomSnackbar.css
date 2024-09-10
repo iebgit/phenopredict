@@ -1,0 +1,41 @@
+/* Matrix-styled Snackbar */
+
+.matrix-theme-snackbar {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #121212 !important; /* Force the dark background */
+  color: #00ff00 !important; /* Matrix green text */
+  border: 1px solid #00ff00;
+  border-radius: 5px;
+}
+
+/* Green for success */
+.snackbar-success {
+  box-shadow: 0 0 10px #00ff00 !important;
+  border-color: #00ff00 !important; /* Bright green border for success */
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px #00ff00 !important;
+}
+
+/* Red for error */
+.snackbar-error {
+  box-shadow: 0 0 10px #ff0000 !important;
+  border-color: #ff0000 !important; /* Red border for error */
+  color: #ff0000 !important;
+  text-shadow: 0 0 5px #ff0000 !important;
+}
+
+/* Yellow for warning */
+.snackbar-warning {
+  box-shadow: 0 0 10px #ffff00 !important;
+  border-color: #ffff00 !important; /* Yellow border for warning */
+  color: #ffff00 !important;
+  text-shadow: 0 0 5px #ffff00 !important;
+}
+
+/* Blue for info */
+.snackbar-info {
+  box-shadow: 0 0 10px #00ffff !important;
+  border-color: #00ffff !important; /* Cyan border for info */
+  color: #00ffff !important;
+  text-shadow: 0 0 5px #00ffff !important;
+}

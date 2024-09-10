@@ -32,10 +32,10 @@ const App = () => {
     setIsLoading(true); // Start showing the spinner when the route changes
     const timeout = setTimeout(() => {
       setIsLoading(false); // Stop showing the spinner after a brief delay
-    }, 500); // Adjust delay as needed to simulate loading
+    }, 1000); // Adjust delay as needed to simulate loading
 
     return () => clearTimeout(timeout); // Clean up timeout on route change
-  }, [setIsLoading, dispatch]);
+  }, []);
 
   return (
     <>

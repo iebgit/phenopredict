@@ -6,8 +6,7 @@ import {
   resendVerificationEmail,
 } from "../redux/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import MatrixSnackbar from "../components/CustomSnackbar"; // Import MatrixSnackbar
 import "./LoginRegister.css"; // Reusing the same CSS file
 
 const Register = () => {
@@ -104,17 +103,13 @@ const Register = () => {
         </button>
       </div>
 
-      {/* Snackbar for success or error notifications */}
-      <Snackbar
+      {/* Matrix Themed Snackbar */}
+      <MatrixSnackbar
         open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        handleClose={handleSnackbarClose}
+      />
 
       <div className="switch-auth-link">
         <p>Already have an account?</p>

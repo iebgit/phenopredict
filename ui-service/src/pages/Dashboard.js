@@ -1,12 +1,32 @@
 import React, { useState } from "react";
 import DataUpload from "../components/DataUpload";
+import MatrixSnackbar from "../components/CustomSnackbar"; // Import the MatrixSnackbar
 import "./Dashboard.css"; // Import the CSS file for the Matrix theme
 
 const Dashboard = () => {
   const [uploadType, setUploadType] = useState("genetic");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSwitch = () => {
     setUploadType(uploadType === "genetic" ? "image" : "genetic");
+  };
+
+  const handleUploadSuccess = () => {
+    setSnackbarMessage("Upload successful!");
+    setSnackbarSeverity("success");
+    setOpenSnackbar(true);
+  };
+
+  const handleUploadError = () => {
+    setSnackbarMessage("Upload failed. Please try again.");
+    setSnackbarSeverity("error");
+    setOpenSnackbar(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
   };
 
   // Dynamic description based on upload type
@@ -32,18 +52,25 @@ const Dashboard = () => {
       <div className="upload-section">
         {uploadType === "genetic" ? (
           <div>
-            <DataUpload uploadType="genetic" />
+            <DataUpload
+              uploadType="genetic"
+              onSuccess={handleUploadSuccess}
+              onError={handleUploadError}
+            />
           </div>
         ) : (
           <div>
-            <DataUpload uploadType="image" />
+            <DataUpload
+              uploadType="image"
+              onSuccess={handleUploadSuccess}
+              onError={handleUploadError}
+            />
           </div>
         )}
       </div>
 
       {/* Wrap buttons in a button-wrapper for alignment */}
       <div className="button-wrapper">
-        {/* Render the upload button only here */}
         <button className="glow-button">
           {uploadType === "genetic" ? "Upload Genetic Data" : "Upload Image"}
         </button>
@@ -54,6 +81,14 @@ const Dashboard = () => {
             : "Switch to Upload Genetic Data"}
         </button>
       </div>
+
+      {/* Matrix Themed Snackbar */}
+      <MatrixSnackbar
+        open={openSnackbar}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        handleClose={handleSnackbarClose}
+      />
     </div>
   );
 };
