@@ -102,10 +102,11 @@
 
 /* Welcome text */
 .welcome-text {
-  color: #00ff00;
+  color: #00cc00;
   font-family: "Roboto Mono", monospace;
   display: flex;
   align-items: center; /* Vertically center welcome text */
+  font-style: italic;
 }
 
 /* Logout button */

@@ -28,8 +28,19 @@ const Navbar = () => {
           &#9776;
         </button>
         <ul className={`navbar-list ${isMobileMenuOpen ? "active" : ""}`}>
+          <li>
+            <Link to="/dashboard" onClick={toggleMobileMenu}>
+              Dashboard
+            </Link>
+          </li>
           {user ? (
             <>
+              <li>
+                <Link to="/profile" onClick={toggleMobileMenu}>
+                  Profile
+                </Link>
+              </li>
+
               <li>
                 <span className="welcome-text">Welcome, {user}</span>
               </li>
@@ -53,11 +64,6 @@ const Navbar = () => {
               </li>
             </>
           )}
-          <li>
-            <Link to="/dashboard" onClick={toggleMobileMenu}>
-              Dashboard
-            </Link>
-          </li>
         </ul>
       </div>
     </nav>

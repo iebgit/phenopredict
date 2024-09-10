@@ -8,9 +8,11 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes
-from .serializers import RegisterSerializer, LoginSerializer, PasswordResetConfirmSerializer 
 from django.utils.encoding import force_str  # Correct import
+from django.contrib.auth import update_session_auth_hash
+from rest_framework.permissions import IsAuthenticated
 from django.core.cache import cache  # Use Django's cache system for failed attempts
+from .serializers import RegisterSerializer, LoginSerializer, PasswordResetConfirmSerializer, UserProfileSerializer, ChangePasswordSerializer, UpdateEmailSerializer 
 
 
 
@@ -68,20 +70,24 @@ class VerifyEmailView(generics.GenericAPIView):
                 "message": "Invalid token."
             }, status=status.HTTP_400_BAD_REQUEST)
             
-# Resend verification email
 class ResendVerificationEmailView(generics.GenericAPIView):
-    permission_classes = [AllowAny]  # Allow public access to this view
+    permission_classes = [AllowAny]
 
-    def post(self, request):
-        email = request.data.get("email")
-        try:
-            user = User.objects.get(email=email)
-            if not user.is_active:
-                send_verification_email(user, request)  # Resend verification email
-                return Response({"message": "Verification email resent."})
-            return Response({"error": "User is already active."}, status=status.HTTP_400_BAD_REQUEST)
-        except User.DoesNotExist:
-            return Response({"error": "User with this email does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = get_object_or_404(User, email=email)
+
+        if user.is_active:
+            return Response({'error': 'This user is already active.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Resend the verification email
+        send_verification_email(user, request)
+
+        return Response({'message': 'Verification email has been resent.'}, status=status.HTTP_200_OK)
+
 
 # Login view with JWT tokens
 class LoginView(generics.GenericAPIView):
@@ -115,6 +121,11 @@ class PasswordResetView(generics.GenericAPIView):
 
     def post(self, request):
         email = request.data.get("email")
+        
+        print("Received email:", email)  # Debugging statement to check if email is coming through
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+          
         user = get_object_or_404(User, email=email)
 
         # Generate token
@@ -155,3 +166,50 @@ class PasswordResetConfirmView(generics.GenericAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({"message": "Invalid token or user."}, status=status.HTTP_400_BAD_REQUEST)
+    
+# User Profile Update View
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+# Change Password View
+class ChangePasswordView(generics.GenericAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.data['old_password']):
+                return Response({"old_password": "Wrong password."}, status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(serializer.data['new_password'])
+            user.save()
+
+            # Update session to prevent logout after password change
+            update_session_auth_hash(request, user)
+
+            return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Update Email View
+class UpdateEmailView(generics.GenericAPIView):
+    serializer_class = UpdateEmailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            user.email = serializer.data['email']
+            user.save()
+            return Response({"message": "Email updated successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

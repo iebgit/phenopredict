@@ -14,6 +14,13 @@
   border-radius: 15px;
   box-shadow: 0 0 20px #00ff00;
 }
+/* Additional margin for smaller devices */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+    width: 90%;
+  }
+}
 
 h2 {
   color: #00ff00;
@@ -33,7 +40,7 @@ h2 {
   color: #fff;
   font-size: 1rem;
   box-shadow: 0 0 10px #00ff00;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.5s ease;
 }
 
 .glow-input:focus {
@@ -51,7 +58,7 @@ h2 {
   border-radius: 5px;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.5s, box-shadow 0.5s;
 }
 
 .glow-button:hover {
@@ -90,22 +97,39 @@ h2 {
   margin-top: 10px;
 }
 
-.resend-button,
-.reset-password-button {
-  width: 48%; /* Each button will take up nearly half of the container */
-  margin: 5px;
+.resend-register-button {
+  width: 100%; /* Each button will take up nearly half of the container */
   padding: 10px;
-  background-color: #00ff00;
-  color: #121212;
+  background-color: #121212;
+  color: #00ff00;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.5s, box-shadow 0.5s;
   text-align: center;
+  font-size: 1.2rem;
+  border: 1px solid #00ff00;
+}
+
+.resend-button,
+.reset-password-button {
+  width: 48%; /* Each button will take up nearly half of the container */
+  padding: 10px;
+  background-color: #121212;
+  color: #00ff00;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s, box-shadow 0.5s;
+  text-align: center;
+  font-size: 1.2rem;
+  border: 1px solid #00ff00;
 }
 
 .resend-button:hover,
-.reset-password-button:hover {
+.reset-password-button:hover,
+.resend-register-button:hover {
   background-color: #00cc00;
-  box-shadow: 0 0 10px #00ff00;
+  box-shadow: 0 0 10px #00cc00;
+  color: #121212;
+  border-color: #00cc00;
 }

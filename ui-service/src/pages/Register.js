@@ -5,7 +5,7 @@ import {
   clearError,
   resendVerificationEmail,
 } from "../redux/authSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import "./LoginRegister.css"; // Reusing the same CSS file
@@ -15,7 +15,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { isLoading, error, user } = useSelector((state) => state.auth);
 
   const [openSnackbar, setOpenSnackbar] = useState(false); // Control the Snackbar
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -24,6 +25,13 @@ const Register = () => {
   useEffect(() => {
     dispatch(clearError());
   }, [dispatch]);
+
+  useEffect(() => {
+    // If the user is logged in, redirect them to the dashboard
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,14 +94,15 @@ const Register = () => {
           Register
         </button>
       </form>
-
-      <button
-        onClick={handleResendVerification}
-        className="glow-button"
-        disabled={isLoading}
-      >
-        Resend Verification Email
-      </button>
+      <div className="button-container">
+        <button
+          onClick={handleResendVerification}
+          className="resend-register-button"
+          disabled={isLoading}
+        >
+          Resend Verification Email
+        </button>
+      </div>
 
       {/* Snackbar for success or error notifications */}
       <Snackbar

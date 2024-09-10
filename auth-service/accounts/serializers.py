@@ -76,3 +76,16 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     def save(self, user):
         user.set_password(self.validated_data['new_password'])
         user.save()
+        
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True, validators=[validate_password])
+
+class UpdateEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)

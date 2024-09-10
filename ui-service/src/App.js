@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 import ResetPasswordForm from "./pages/ResetPasswordForm"; // Import the new reset password form component
 import { useDispatch } from "react-redux";
 import { loadUserFromStorageAsync } from "./redux/authSlice";
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/reset-password/:uidb64/:token"
           element={<ResetPasswordForm />}

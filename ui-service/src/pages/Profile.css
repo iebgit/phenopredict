@@ -1,0 +1,92 @@
+/* Profile.css - Matrix Theme Styling */
+/* Body styling */
+body {
+  background-color: #0a0a0a;
+  color: #00ff00;
+  font-family: "Roboto Mono", monospace;
+  margin: 0;
+}
+
+/* Dashboard container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+  background-color: #121212;
+  margin: 6rem auto;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00ff00;
+}
+
+/* Additional margin for smaller devices */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 10px;
+    width: 90%;
+  }
+}
+
+.profile-heading {
+  font-size: 2rem;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  margin-bottom: 20px;
+}
+
+.form-heading {
+  color: #00ff00;
+
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.profile-form {
+  margin: 20px 0;
+}
+
+.glow-input {
+  background-color: transparent;
+  border: 1px solid #00ff00;
+  border-radius: 5px;
+  color: #00ff00;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.glow-input::placeholder {
+  color: #00cc00; /* Placeholder text in lighter green */
+}
+
+.glow-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.glow-button {
+  background-color: #00ff00;
+  border: none;
+  color: #121212;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  width: 100%;
+}
+
+.glow-button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.glow-button:disabled {
+  background-color: #555;
+  color: #888;
+}
