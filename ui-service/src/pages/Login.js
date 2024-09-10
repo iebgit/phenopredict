@@ -100,7 +100,7 @@ const Login = () => {
       {/* Container for buttons */}
       <div className="button-container">
         <button onClick={handleResendVerification} className="resend-button">
-          Resend Verification
+          Verification
         </button>
         <button onClick={handleResetPassword} className="reset-password-button">
           Reset Password

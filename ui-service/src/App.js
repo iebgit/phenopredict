@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer"; // Import the Footer component
 import Home from "./pages/Home";
@@ -20,26 +15,16 @@ import { useLoading } from "./contexts/LoadingContext"; // Use the loading conte
 
 const App = () => {
   const dispatch = useDispatch();
-  const { setIsLoading } = useLoading();
-  const location = useLocation();
+  const { isLoading } = useLoading(); // You no longer need to trigger loading on route changes
 
   useEffect(() => {
     // Load user from local storage
     dispatch(loadUserFromStorageAsync());
   }, [dispatch]);
 
-  useEffect(() => {
-    setIsLoading(true); // Start showing the spinner when the route changes
-    const timeout = setTimeout(() => {
-      setIsLoading(false); // Stop showing the spinner after a brief delay
-    }, 1000); // Adjust delay as needed to simulate loading
-
-    return () => clearTimeout(timeout); // Clean up timeout on route change
-  }, []);
-
   return (
     <>
-      <LoadingSpinner />
+      {isLoading && <LoadingSpinner />} {/* Show spinner only when loading */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

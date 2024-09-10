@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { performLogout } from "../redux/authSlice";
+import logo from "./dna-icon.svg";
 import "./Navbar.css";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -18,11 +20,18 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  useEffect(() => {
+    // If the user is logged in, redirect them to the dashboard
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          PhenoPredict
+          <img src={logo} alt="Logo" className="icon" /> PhenoPredict
         </Link>
         <button className="mobile-menu-icon" onClick={toggleMobileMenu}>
           &#9776;

@@ -30,8 +30,8 @@ h2 {
 }
 
 .glow-input {
-  width: 100%;
-  max-width: 380px; /* Ensure inputs and buttons have the same max-width */
+  width: 90%;
+  max-width: 350px; /* Ensure inputs and buttons have the same max-width */
   padding: 10px;
   margin-bottom: 20px;
   background-color: #1c1c1c;
@@ -50,7 +50,7 @@ h2 {
 
 .glow-button {
   width: 100%;
-  max-width: 320px;
+  max-width: 372px !important;
   padding: 10px;
   background-color: #00ff00;
   color: #121212;
@@ -92,7 +92,7 @@ h2 {
 .button-container {
   display: flex;
   justify-content: space-between;
-  width: 100%; /* Ensure it takes up full width */
+  width: 93%; /* Ensure it takes up full width */
   max-width: 400px; /* Matches the width of the Login button */
   margin-top: 10px;
 }
@@ -102,8 +102,7 @@ h2 {
   padding: 10px;
   background-color: #121212;
   color: #00ff00;
-  border: none;
-  border-radius: 5px;
+  border: 1px solid #00ff00;
   cursor: pointer;
   transition: background-color 0.5s, box-shadow 0.5s;
   text-align: center;

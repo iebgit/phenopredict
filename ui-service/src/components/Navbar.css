@@ -66,6 +66,11 @@
   cursor: pointer;
 }
 
+.icon {
+  height: 1.6rem;
+  margin-left: 1rem;
+}
+
 /* Responsive Styling */
 @media (max-width: 768px) {
   .navbar-list {

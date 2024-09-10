@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DataUpload from "../components/DataUpload";
-import MatrixSnackbar from "../components/CustomSnackbar"; // Import the MatrixSnackbar
+import MatrixSnackbar from "../components/CustomSnackbar";
+import { useLoading } from "../contexts/LoadingContext";
+import { useDispatch } from "react-redux";
+import { fetchDataAction } from "../redux/dataSlice"; // Import the action here
+
 import "./Dashboard.css"; // Import the CSS file for the Matrix theme
 
 const Dashboard = () => {
+  // const { setIsLoading } = useLoading();
+  // const dispatch = useDispatch();
+
   const [uploadType, setUploadType] = useState("genetic");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -28,6 +35,19 @@ const Dashboard = () => {
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       await dispatch(fetchDataAction()); // Assuming this is an async action
+  //     } finally {
+  //       setIsLoading(false); // Stop loading when data fetching is complete
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [dispatch, setIsLoading]);
 
   // Dynamic description based on upload type
   const description =
