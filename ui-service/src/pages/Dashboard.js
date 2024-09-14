@@ -91,10 +91,6 @@ const Dashboard = () => {
 
       {/* Wrap buttons in a button-wrapper for alignment */}
       <div className="button-wrapper">
-        <button className="glow-button">
-          {uploadType === "genetic" ? "Upload Genetic Data" : "Upload Image"}
-        </button>
-
         <button className="toggle-button" onClick={handleSwitch}>
           {uploadType === "genetic"
             ? "Switch to Upload Image"

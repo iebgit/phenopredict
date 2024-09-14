@@ -144,7 +144,6 @@ export const registerUser = (credentials) => async (dispatch) => {
   }
 };
 
-// Async action for user login
 export const login = (credentials) => async (dispatch) => {
   try {
     dispatch(loginStart());
@@ -152,7 +151,7 @@ export const login = (credentials) => async (dispatch) => {
       email: credentials.email,
       password: credentials.password,
     });
-
+    console.log("Response:", response); // Log the full response
     const { access, refresh } = response.data;
     dispatch(
       loginSuccess({
@@ -165,6 +164,7 @@ export const login = (credentials) => async (dispatch) => {
     localStorage.setItem("refresh", refresh); // Store refresh token in localStorage
     localStorage.setItem("user", credentials.email); // Store user email in localStorage
   } catch (error) {
+    console.error("Login Error:", error); // Log the full error
     dispatch(
       loginFailure(
         error.response?.data?.non_field_errors
