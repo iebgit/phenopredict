@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DataUpload from "../components/DataUpload";
 import MatrixSnackbar from "../components/CustomSnackbar";
-import { useLoading } from "../contexts/LoadingContext";
-import { useDispatch } from "react-redux";
-import { fetchDataAction } from "../redux/dataSlice"; // Import the action here
+import "./Dashboard.css"; // Import your existing CSS
+import { AiOutlineInfoCircle } from "react-icons/ai"; // Info icon
 
-import "./Dashboard.css"; // Import the CSS file for the Matrix theme
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Dashboard = () => {
-  // const { setIsLoading } = useLoading();
-  // const dispatch = useDispatch();
-
   const [uploadType, setUploadType] = useState("genetic");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [files, setFiles] = useState([]);
+  const [showDescription, setShowDescription] = useState(false); // State to control the popup
+
+  useEffect(() => {
+    fetchFiles(); // Fetch the user's uploaded files when the component loads
+  }, []);
 
   const handleSwitch = () => {
     setUploadType(uploadType === "genetic" ? "image" : "genetic");
@@ -24,6 +27,7 @@ const Dashboard = () => {
     setSnackbarMessage("Upload successful!");
     setSnackbarSeverity("success");
     setOpenSnackbar(true);
+    fetchFiles(); // Refresh the file list after successful upload
   };
 
   const handleUploadError = () => {
@@ -36,69 +40,152 @@ const Dashboard = () => {
     setOpenSnackbar(false);
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       await dispatch(fetchDataAction()); // Assuming this is an async action
-  //     } finally {
-  //       setIsLoading(false); // Stop loading when data fetching is complete
-  //     }
-  //   };
+  const fetchFiles = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`${API_URL}/genetic/files/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setFiles(response.data.files);
+    } catch (error) {
+      console.error("Error fetching files:", error);
+    }
+  };
 
-  //   fetchData();
-  // }, [dispatch, setIsLoading]);
+  const handleDeleteFile = async (fileId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `${API_URL}/genetic/file/${fileId}/delete/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-  // Dynamic description based on upload type
+      // Update the file list after successful deletion
+      setFiles(files.filter((file) => file.id !== fileId));
+
+      setSnackbarMessage("File deleted successfully.");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      setSnackbarMessage("Error deleting file. Please try again.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    }
+  };
+
+  const handleGenerateSignedURL = async (fileId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${API_URL}/genetic/file/${fileId}/signed-url/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      window.open(response.data.signed_url, "_blank");
+    } catch (error) {
+      console.error("Error generating signed URL:", error);
+      setSnackbarMessage("Error generating download link. Please try again.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    }
+  };
+
   const description =
     uploadType === "genetic"
       ? "Upload genetic data (raw data from 23andMe/AncestryDNA) to gain insight into appearance, behavior, ancestry, and health risks."
       : "Upload a facial image to receive predictions based on physical features, including ancestry, health, and behavior.";
 
+  const toggleDescription = () => {
+    setShowDescription(!showDescription); // Toggle popup
+  };
+
   return (
     <div className="dashboard-container">
       {uploadType === "genetic" ? (
         <div>
-          <h2 className="dashboard-heading">Upload Genetic Data</h2>
+          <h2 className="dashboard-heading">
+            Upload Genetic Data
+            {/* Information Icon */}
+            <AiOutlineInfoCircle
+              className="info-icon"
+              onClick={toggleDescription}
+              title="Click for more info"
+              style={{ marginLeft: "10px", cursor: "pointer" }}
+            />
+          </h2>
         </div>
       ) : (
         <div>
-          <h2 className="dashboard-heading">Upload Image</h2>
+          <h2 className="dashboard-heading">
+            Upload Image
+            <AiOutlineInfoCircle
+              className="info-icon"
+              onClick={toggleDescription}
+              title="Click for more info"
+              style={{ marginLeft: "10px", cursor: "pointer" }}
+            />
+          </h2>
         </div>
       )}
-      <p className="dashboard-description">{description}</p>
 
-      {/* Conditionally render the DataUpload component based on the selected upload type */}
-      <div className="upload-section">
-        {uploadType === "genetic" ? (
-          <div>
-            <DataUpload
-              uploadType="genetic"
-              onSuccess={handleUploadSuccess}
-              onError={handleUploadError}
-            />
-          </div>
+      {/* Display the list of uploaded files */}
+      <div className="file-list">
+        <p>Uploaded Files</p>
+        {files.length > 0 ? (
+          <ul>
+            {files.map((file) => (
+              <li key={file.id}>
+                {file.file_name}{" "}
+                <button
+                  onClick={() => handleGenerateSignedURL(file.id)}
+                  className="download-button"
+                >
+                  Download
+                </button>
+                <button
+                  onClick={() => handleDeleteFile(file.id)}
+                  className="delete-button"
+                  style={{ marginLeft: "10px" }}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
         ) : (
-          <div>
-            <DataUpload
-              uploadType="image"
-              onSuccess={handleUploadSuccess}
-              onError={handleUploadError}
-            />
-          </div>
+          <p>No files uploaded yet.</p>
         )}
       </div>
 
-      {/* Wrap buttons in a button-wrapper for alignment */}
-      <div className="button-wrapper">
-        <button className="toggle-button" onClick={handleSwitch}>
-          {uploadType === "genetic"
-            ? "Switch to Upload Image"
-            : "Switch to Upload Genetic Data"}
-        </button>
+      <div className="upload-section">
+        <DataUpload
+          uploadType={uploadType}
+          onSuccess={handleUploadSuccess}
+          onError={handleUploadError}
+          onFileUploaded={fetchFiles} // Refresh the file list after uploading
+        />
       </div>
 
-      {/* Matrix Themed Snackbar */}
+      <button className="toggle-button" onClick={handleSwitch}>
+        {uploadType === "genetic"
+          ? "Switch to Upload Image"
+          : "Switch to Upload Genetic Data"}
+      </button>
+
+      {/* Modal for showing description */}
+      {showDescription && (
+        <div className="description-modal">
+          <p>{description}</p>
+          <button className="close-button" onClick={toggleDescription}>
+            Close
+          </button>
+        </div>
+      )}
+
       <MatrixSnackbar
         open={openSnackbar}
         message={snackbarMessage}

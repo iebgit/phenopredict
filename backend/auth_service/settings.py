@@ -21,14 +21,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# Email verification requires email configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Using SMTP for email sending
-EMAIL_HOST = 'smtp.gmail.com'  # Gmail SMTP server
-EMAIL_PORT = 587  # Port for TLS
-EMAIL_USE_TLS = True  # Enable TLS encryption
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Your email address
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Your email password
-
 # Alternatively, for testing purposes, you can use Django's console backend to print emails to the console:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

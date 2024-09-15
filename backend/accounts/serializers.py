@@ -89,3 +89,4 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 class UpdateEmailSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
+    

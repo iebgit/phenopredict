@@ -68,7 +68,7 @@ body {
 .glow-button,
 .toggle-button {
   width: 100%; /* Ensure both buttons have full width */
-  max-width: 400px; /* Set a maximum width for consistency */
+  max-width: 370px; /* Set a maximum width for consistency */
   padding: 10px;
   margin-top: 15px;
   border-radius: 5px;
@@ -100,5 +100,115 @@ body {
 .toggle-button:hover {
   background-color: #00ff00;
   color: #121212;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* Styling for the uploaded files section */
+.file-list {
+  width: 100%;
+  color: #00ff00; /* Neon green text */
+  font-size: 1rem;
+  text-shadow: 0 0 5px #00ff00; /* Glowing text */
+  border-top: 1px solid #00ff00; /* Add a green border on top */
+  border-bottom: 1px solid #00ff00; /* Add a green border on top */
+}
+
+.file-list h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+/* Styling individual file items */
+.file-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.file-list li {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Styling for the download and delete buttons */
+.download-button,
+.delete-button {
+  background-color: #00ff00;
+  color: #121212;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border-radius: 3px;
+}
+
+.download-button:hover,
+.delete-button:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 5px #00ff00;
+}
+
+/* Additional styling for the delete button */
+.delete-button {
+  background-color: #ff0000;
+  color: #121212;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+  box-shadow: 0 0 5px #ff0000;
+}
+
+/* Styling the file names */
+.file-name {
+  color: #b0b0b0; /* Light gray to differentiate from buttons */
+  margin-right: 10px;
+}
+
+/* Styling for the info icon */
+.info-icon {
+  color: #00ff00;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Modal popup styling */
+.description-modal {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  background-color: #121212;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ff00;
+  color: #b0b0b0;
+  z-index: 1000;
+  max-width: 300px;
+  text-align: center;
+}
+
+.description-modal p {
+  color: #00ff00;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.close-button {
+  background-color: #00ff00;
+  color: #121212;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.close-button:hover {
+  background-color: #00cc00;
   box-shadow: 0 0 10px #00ff00;
 }

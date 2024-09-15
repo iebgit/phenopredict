@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios"; // Import axios for API calls
-import "./DataUpload.css"; // Ensure the CSS for styling is linked
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./DataUpload.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const DataUpload = ({ uploadType, onSuccess, onError }) => {
+const DataUpload = ({ uploadType, onSuccess, onError, onFileUploaded }) => {
   const [fileName, setFileName] = useState("No file chosen");
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -16,29 +16,30 @@ const DataUpload = ({ uploadType, onSuccess, onError }) => {
 
   const handleFileUpload = async () => {
     if (!selectedFile) {
-      onError(); // If no file is selected, trigger an error
+      onError();
       return;
     }
 
     const formData = new FormData();
-    formData.append("file", selectedFile); // Add file to FormData
+    formData.append("file", selectedFile);
 
     try {
-      const token = localStorage.getItem("token"); // Assuming you have a JWT token saved in local storage
+      const token = localStorage.getItem("token");
       const response = await axios.post(
-        `${API_URL}/genetic/upload-genetic-data/`, // Replace with your actual backend API URL
+        `${API_URL}/genetic/upload-genetic-data/`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Important for file upload
-            Authorization: `Bearer ${token}`, // Attach JWT for authentication
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      onSuccess(); // Trigger success if the upload is successful
+      onSuccess();
+      onFileUploaded(); // Trigger a callback to refresh the file list
     } catch (error) {
       console.error("File upload failed:", error);
-      onError(); // Trigger error if the upload fails
+      onError();
     }
   };
 

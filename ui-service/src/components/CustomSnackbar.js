@@ -11,7 +11,6 @@ const CustomSnackbar = ({ open, message, severity, handleClose }) => {
       autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      className={`matrix-theme-snackbar snackbar-${severity}`} // Add class based on severity
     >
       <Alert
         onClose={handleClose}
